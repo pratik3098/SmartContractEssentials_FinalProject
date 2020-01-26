@@ -4,15 +4,25 @@ import "./ERC721Interface.sol";
 
 contract ERC721Token is ERC721 {
     address public owner;
-    
-    
     event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
     event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
     event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
     event UserCalldata(bytes);
-    mapping(address=> uint256)                  tokens;
-    mapping(uint256 => address)                 token_owner;
-    mapping(address=>mapping(address=>uint256)) approved;
+    mapping(address=> uint256)                    tokens;
+    mapping(uint256 => address)                   token_owner;
+    mapping(address=>mapping(address=>uint256))   approved;
+    uint256 token_count;
+    constructor() public{
+        owner=msg.sender;
+        token_count=0;
+    }
+    
+    function mint(address _reciepent) external payable onlyOwner{
+        require(_reciepent!=address(0),"Error: Invalid address");
+        token_count++;
+        this.safeTransferFrom(owner,_reciepent,token_count);
+        
+    }
     
     function balanceOf(address _owner) external view returns (uint256){
         require(tokens[_owner]!= 0,"Error: Owner doesn't exist");
@@ -35,7 +45,7 @@ contract ERC721Token is ERC721 {
         require(approved[_from][_to]==_tokenId,"Error: Transfer not approved");
         tokens[_from]=0;
         token_owner[_tokenId]=_to;
-        tokens[_to]=0;
+        tokens[_to]=_tokenId;
         emit Transfer(_from, _to, _tokenId);
     }
     
@@ -49,7 +59,8 @@ contract ERC721Token is ERC721 {
         emit Approval(msg.sender, _approved, _tokenId);
     }
     
-    function setApprovalForAll(address _operator, bool _approved) external onlyOwner{
+    function setApprovalForAll(address _operator, bool _approved) external onlyOwner {
+        this.approve(_operator,tokens[_operator]);
         
     }
     function getApproved(uint256 _tokenId) external onlyOwner view  returns (address) {
