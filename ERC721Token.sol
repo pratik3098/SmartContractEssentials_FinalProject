@@ -10,8 +10,8 @@ contract ERC721Token is ERC721 {
     event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
     event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
     event UserCalldata(bytes);
-    mapping(address=> uint256) tokens;
-    mapping(uint256 => address)  token_owner;
+    mapping(address=> uint256)                  tokens;
+    mapping(uint256 => address)                 token_owner;
     mapping(address=>mapping(address=>uint256)) approved;
     
     function balanceOf(address _owner) external view returns (uint256){
@@ -52,10 +52,13 @@ contract ERC721Token is ERC721 {
     function setApprovalForAll(address _operator, bool _approved) external onlyOwner{
         
     }
-    function getApproved(uint256 _tokenId) external view returns (address){
-        
+    function getApproved(uint256 _tokenId) external onlyOwner view  returns (address) {
+        require(_tokenId !=0,"Error: Invalid tokenId");
+        return token_owner[_tokenId];
     }
-    function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+    function isApprovedForAll(address _owner, address _operator) external view returns (bool){
+        return (approved[_owner][_operator]!=0);
+    }
     
     modifier onlyOwner{
         require(msg.sender==owner, "Error: Only owner authorised");
