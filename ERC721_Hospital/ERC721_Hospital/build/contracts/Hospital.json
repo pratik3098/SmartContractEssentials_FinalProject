@@ -11744,12 +11744,13 @@
         }
       },
       "links": {},
-      "address": "0x2d85ce1811Cd768E323a30a6f0132c743d5AE966",
-      "transactionHash": "0x414b7aed8498ba88589adebfaeabdfeb3c8d5d96deedab12a1ba341b70986e95"
+      "address": "0x9090fbB28D27a85afFc1258A2A3972FD20fd3788",
+      "transactionHash": "0xb4f26a50627d4f61c929849054f04c70733f06ebcfd6ea7cc4fcb6f4e610bf50"
     }
   },
   "schemaVersion": "3.0.22",
-  "updatedAt": "2020-01-27T03:28:30.600Z",
+  "updatedAt": "2020-01-27T04:45:58.838Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },

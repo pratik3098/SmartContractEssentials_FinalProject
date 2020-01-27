@@ -2642,7 +2642,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.22",
-  "updatedAt": "2020-01-27T03:28:30.536Z",
+  "updatedAt": "2020-01-27T04:50:46.624Z",
   "devdoc": {
     "methods": {
       "supportsInterface(bytes4)": {
