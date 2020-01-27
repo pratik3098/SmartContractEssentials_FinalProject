@@ -27,6 +27,15 @@ contract Hospital is ERC721Token{
        require(!this.doctortAlreadyExists(D),"Error: Doctor already exists");
        doctors.push(D);
    }
+   function removeDoctor(Doctor D) external onlyOwner{
+        require(this.doctortAlreadyExists(D),"Error: Doctor does not  exists");
+        for(uint i=0; i< doctors.length;i++){
+            if(doctors[i].getAddress()==D.getAddress()){
+            delete doctors[i];
+            doctors.length--;
+            }
+        }
+    }
     function disChargePatient(Patient P) external onlyOwner{
         require(this.patientAlreadyExists(P),"Error: Patient does not  exists");
         for(uint i=0; i< patients.length;i++){
