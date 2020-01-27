@@ -10,6 +10,10 @@ contract Hospital is ERC721Token{
     Doctor[] doctors;
     string name;
     uint256 max_capacity;
+    mapping(address=>address)   doctor_assigned; 
+    mapping(address => bool)    admitted_status;
+    
+    
     constructor(string memory _name, string memory _symbol,uint256 capacity) public payable ERC721Token(_name,_symbol) {
         require(capacity>0,"Error: Invalid capacity");
         max_capacity = capacity;
@@ -21,7 +25,13 @@ contract Hospital is ERC721Token{
         require(patients.length<max_capacity,"Error: Hospital capacity full");
         require(!this.patientAlreadyExists(P),"Error: Patient already exists");
         patients.push(P);
+        admitted_status[P.getAddress()]=true;
         
+    }
+    function assignDoctor(Patient P, Doctor D) external onlyOwner{
+        require(this.patientAlreadyExists(P),"Error: Patient does not exists");
+        require(this.doctortAlreadyExists(D), "Error: Doctor does not exists");
+        doctor_assigned[D.getAddress()]=P.getAddress();
     }
    function addDoctor(Doctor D) external onlyOwner{
        require(!this.doctortAlreadyExists(D),"Error: Doctor already exists");

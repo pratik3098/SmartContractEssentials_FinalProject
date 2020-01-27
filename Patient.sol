@@ -31,4 +31,5 @@ contract Patient is Person{
         admit_status=admit;
     }
     
+    
 }
