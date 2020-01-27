@@ -1,7 +1,6 @@
 pragma solidity ^0.5.16;
 
 import "./Person.sol";
-import "./Drug.sol";
 
 contract Patient is Person{
     address public emr;

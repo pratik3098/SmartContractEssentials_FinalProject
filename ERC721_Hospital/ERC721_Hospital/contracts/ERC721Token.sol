@@ -42,8 +42,7 @@ contract ERC721Token is ERC721 {
         emit UserCalldata(data);
     }
     
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable onlySender(_from) {
-        require(msg.sender==_from,"Error: Invalid invoker");
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable onlyOwner {
         require(_tokenId!=0,"Error: Invalid token Id");
         require(tokens[_from]==_tokenId,"Error: Invalid Owner");
         require(approved[_from][_to]==_tokenId,"Error: Transfer not approved");
@@ -56,11 +55,11 @@ contract ERC721Token is ERC721 {
     function transferFrom(address _from, address _to, uint256 _tokenId) external payable onlyOwner{
         this.safeTransferFrom(_from,_to,_tokenId);
     }
-    function approve(address _approved, uint256 _tokenId) external payable onlySender(_approved){
-        require(tokens[msg.sender]!=0,"Error: TokenId does not exist");
-        require(token_owner[_tokenId]==msg.sender,"Error: Not a token owner");
-        approved[msg.sender][_approved]= _tokenId;
-        emit Approval(msg.sender, _approved, _tokenId);
+    function approve(address _approved, uint256 _tokenId) external payable onlyOwner{
+        require(tokens[_approved]!=0,"Error: TokenId does not exist");
+        require(token_owner[_tokenId]==_approved,"Error: Not a token owner");
+        approved[_approved][owner]= _tokenId;
+        emit Approval( _approved, owner,_tokenId);
     }
     
     function setApprovalForAll(address _operator, bool _approved) external onlyOwner {
@@ -73,6 +72,9 @@ contract ERC721Token is ERC721 {
     }
     function isApprovedForAll(address _owner, address _operator) external view returns (bool){
         return (approved[_owner][_operator]!=0);
+    }
+    function getTokenCount() external view returns(uint256){
+        return token_count;
     }
     
     modifier onlyOwner{

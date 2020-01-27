@@ -1,6 +1,4 @@
 pragma solidity ^0.5.16;
-
-
 contract Person{
     address public owner;
     string public name;
@@ -16,7 +14,7 @@ contract Person{
     function increamentAge() public onlyOwner {
         age++;
     }
-    function getAddress() external returns (address){
+    function getAddress() external view returns (address){
         return owner;
     }
     

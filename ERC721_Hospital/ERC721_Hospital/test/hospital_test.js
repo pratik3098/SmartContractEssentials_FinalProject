@@ -5,11 +5,6 @@ const ERC721Token = artifacts.require("ERC721Token");
 const assert = require('assert');
 const truffleAssert = require('truffle-assertions');
 
-contract("Patient",accounts =>{
-    describe('Deploying Patient Contract', ()=>{
-        
-    })
-})
 
 contract("Hospital", accounts => {
   describe('Deploying Hospital  Contract', () => {
@@ -18,22 +13,19 @@ contract("Hospital", accounts => {
       assert.ok(hospital.address);
     });
 
-    it('Balance of creator = initial token supply', async () => {
-      const item = await Items.deployed();
-      const balance = await item.balanceOf.call(accounts[0]);
-      assert(balance == initialTokens);
+    it('Minting a new token', async () => {
+      const minted = await hospital.mint.call(accounts[2]);
+      assert(token_count == 1);
     });
-    it('Creator can CreateItem', async () => {
-      const Level = 2;
-      const Rarity = 3;
-      const to = accounts[1];
-      const owner = accounts[0];
-      const name = "sword";
-      const item = await Items.deployed();
-      await item.createItem.sendTransaction(name, Level, Rarity, to, { from: owner });
-      const finalBalance = await item.balanceOf.call(accounts[1]);
-      assert(finalBalance > 0);
+    it('Cheking the tokenId of account', async () => {
+      const address_tokenId = await hospital.balanceOf.call(accounts[2])
+      assert(address_tokenId == 1);
     });
+    it('Cheking the owner of tokenId', async () => {
+        const tokenId_owner = await hospital.ownerOf.call(1)
+        assert(tokenId_owner == accounts[2]);
+      });
+
     it('Can transferFrom your own coin', async () => {
       const tokenId = 0;
       const owner = accounts[0];
