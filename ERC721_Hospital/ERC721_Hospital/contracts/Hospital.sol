@@ -34,10 +34,10 @@ contract Hospital is ERC721Token{
         for(uint i =0; i< patients.length; i++){
             if (patients[i].getAddress()== patient)
             {   
-                 for(uint i =0; i< doctors.length; i++){
-                 if (doctors[i].getAddress()== msg.sender)
+                 for(uint j =0; j< doctors.length; j++){
+                 if (doctors[j].getAddress()== msg.sender)
                 {  
-                     patients[i].add_drug(drug_address, qty, valid_till, doctors[i].get_sign());
+                     patients[i].add_drug(drug_address, qty, valid_till, doctors[j].get_sign());
                  }
         }
                

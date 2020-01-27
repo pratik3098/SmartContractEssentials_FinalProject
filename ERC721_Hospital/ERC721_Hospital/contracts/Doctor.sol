@@ -1,3 +1,4 @@
+pragma solidity ^0.5.16;
 import "./Person.sol";
 
 contract Doctor is Person{

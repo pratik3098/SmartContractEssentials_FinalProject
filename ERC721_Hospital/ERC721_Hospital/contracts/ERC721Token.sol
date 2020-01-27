@@ -12,9 +12,13 @@ contract ERC721Token is ERC721 {
     mapping(uint256 => address)                   token_owner;
     mapping(address=>mapping(address=>uint256))   approved;
     uint256 token_count;
-    constructor() public{
+    string name;
+    string symbol;
+    constructor(string memory _name, string memory _symbol) public{
         owner=msg.sender;
         token_count=0;
+        name=_name;
+        symbol=_symbol;
     }
     
     function mint(address _reciepent) external payable onlyOwner{
