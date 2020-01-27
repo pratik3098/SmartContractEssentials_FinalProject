@@ -16,9 +16,13 @@ contract Person{
     function increamentAge() public onlyOwner {
         age++;
     }
+    function getAddress() external returns (address){
+        return owner;
+    }
     
     modifier onlyOwner{
         require(msg.sender==owner, "Error: Only owner authorised");
         _;
     }
+    
 }
